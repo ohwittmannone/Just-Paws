@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/entire_card"
+    android:layout_width="match_parent"
+    android:layout_height="265dp"
+    android:layout_margin="8dp"
+    android:clickable="true"
+    android:foreground="?android:attr/selectableItemBackground"
+    app:cardCornerRadius="2dp"
+    app:cardUseCompatPadding="true">
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ProgressBar
+            android:id="@+id/progressbar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerInParent="true"
+            android:paddingTop="100dp"
+            android:visibility="visible" />
+
+
+        <ImageView
+            android:id="@+id/pet_image"
+            android:layout_width="match_parent"
+            android:layout_height="210dp"
+            android:layout_alignParentTop="true"
+            android:scaleType="centerCrop"
+            android:src="@drawable/placeholder"
+            android:visibility="gone" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/pet_image"
+            android:orientation="horizontal"
+            android:background="@color/primaryColour">
+
+            <TextView
+                android:id="@+id/pet_description"
+                android:layout_width="fill_parent"
+                android:layout_height="55dp"
+                android:layout_below="@+id/pet_image"
+                android:padding="10dp"
+                android:textColor="#FFFFFF"
+                android:textSize="20sp"
+                android:visibility="gone"
+                android:layout_weight="1"/>
+
+            <ImageView
+                android:id="@+id/favouriteBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:src="@drawable/ic_favorite_border_white_36dp"
+                android:paddingRight="5dp"
+                android:visibility="gone"/>
+        </LinearLayout>
+
+    </RelativeLayout>
+
+</android.support.v7.widget.CardView>

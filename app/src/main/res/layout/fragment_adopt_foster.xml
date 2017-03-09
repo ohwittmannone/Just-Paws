@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/foster_title"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="@string/ready_to_foster"
+                style="@style/subheadingTextView" />
+
+            <TextView
+                android:id="@+id/foster_body_text"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                style="@style/standardTextView"
+                android:text="@string/foster_body"/>
+
+            <include layout="@layout/space_layout" />
+
+            <TextView
+                android:id="@+id/adopt_title"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="@string/ready_to_adopt"
+                style="@style/subheadingTextView"/>
+
+            <TextView
+                android:id="@+id/adopt_body_text"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                style="@style/standardTextView"
+                android:text="@string/adopt_body"/>
+
+            <include layout="@layout/space_layout" />
+
+            <TextView
+                android:id="@+id/keep_in_mind_title"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="@string/keep_in_mind"
+                style="@style/subheadingTextView"/>
+
+            <TextView
+                android:id="@+id/keep_in_mind_text"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                style="@style/standardTextView"
+                android:text="@string/keep_in_mind_body"/>
+
+            <include layout="@layout/space_layout" />
+
+            <TextView
+                android:id="@+id/fee_title"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="@string/adoption_fee"
+                style="@style/subheadingTextView"/>
+
+            <TextView
+                android:id="@+id/fee_body_text"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                style="@style/standardTextView"
+                android:text="@string/fee_body" />
+
+            <include layout="@layout/space_layout" />
+
+            <TextView
+                android:id="@+id/process_title"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="@string/process"
+                style="@style/subheadingTextView"/>
+
+            <TextView
+                android:id="@+id/process_text"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                style="@style/standardTextView"
+                android:text="@string/process_body" />
+
+            <include layout="@layout/space_layout" />
+
+            <TextView
+                android:id="@+id/matching_title"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="@string/matching"
+                style="@style/subheadingTextView"/>
+
+            <TextView
+                android:id="@+id/matching_text"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                style="@style/standardTextView"
+                android:text="@string/matching_body" />
+
+        </LinearLayout>
+
+    </android.support.v4.widget.NestedScrollView>
+
+</LinearLayout>

@@ -1,0 +1,86 @@
+{
+  "project_info": {
+    "project_number": "157587026706",
+    "firebase_url": "https://justpaws-822de.firebaseio.com",
+    "project_id": "justpaws-822de",
+    "storage_bucket": "justpaws-822de.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:157587026706:android:663e6255ca898f24",
+        "android_client_info": {
+          "package_name": "com.ohwittmannone.justpaws"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "157587026706-ai91fjli6qt4dfgfl522ja9shuqmhq10.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.ohwittmannone.justpaws",
+            "certificate_hash": "4a64e35509b0bb3116e3f081993e3ddc55edfe43"
+          }
+        },
+        {
+          "client_id": "157587026706-iu0gnn70okmdlsolm66fdsqe1s8imf01.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDt7Wx2w11J8Opqw4-nXMPcG3W0-0-O9VM"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "157587026706-iu0gnn70okmdlsolm66fdsqe1s8imf01.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:157587026706:android:1e6c39b76cc6f816",
+        "android_client_info": {
+          "package_name": "com.ohwittmannone.just_paws"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "157587026706-iu0gnn70okmdlsolm66fdsqe1s8imf01.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDt7Wx2w11J8Opqw4-nXMPcG3W0-0-O9VM"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

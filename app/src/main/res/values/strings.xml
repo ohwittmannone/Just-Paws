@@ -1,0 +1,95 @@
+<resources>
+    <string name="app_name">Just Paws</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
+
+    <string name="about_us_text">Just Paws Animal Rescue is a non profit organization. We rescue animals that are in high kill shelters, abandoned, abused, or unloved.
+        These animals are fully vetted and neutered/spayed before being re-homed. We also accept owner surrender pets. We realize that hard times may fall on good people and that
+        the needs of the animals may not be met. Our volunteers are compassionate nonjudgmental animal lovers who want to bring awareness to atrocious amounts of animals living in
+        shelters. Healthy loving animals would be a welcome addition to any home, yet are often over looked. We are an experienced group of people who have volunteered many days
+        of our lives to animal rescues and have decided to spread the love and create our own rescue.
+
+        \n\nWe are an all volunteer, foster home based program. We are not a kennel or shelter and we do not have a central office or adoption location. Our volunteers work out of their
+        homes and all of our dogs are housed and cared for by foster caregivers in a home setting. We have NO paid employees.  All positions held are volunteers that give their time and talents to promote our mission.
+
+        \n\nAlong with our outstanding team of volunteers, we are lucky enough to have an amazing Vet to work with us and our fur babies. Donations can also be made directly to Richmond Hill Animal Clinic.
+        Do NOT call the clinic with any questions about adopting/fostering an animal.</string>
+
+    <string name="ready_to_foster">Ready to Foster?</string>
+    <string name="foster_body">Many people want to help with animal rescue but aren\'t sure how. Some may be unable to adopt because of long-term commitment and others may be
+        limited financially. If this sounds familiar you may want to consider being a foster parent. Foster homes are critical to animal rescue as we can save only as many
+        dogs as we have foster space for.
+
+        \n\nLike any foster parent, you have a special task ahead of you. You have to guide, teach, help, and love this refugee, without becoming
+        this dog\'s special one-and-only person. You have to be ready to spend time and energy and love on this dog, and yet be able to give it up when the right family comes
+        along. If everything works out right, someday not too far in the future, there\'ll be a lump in your throat and maybe even tears in your eyes as you watch your foster
+        dog eagerly leave your home and loving care for a new life with a new family. We provide all food and medical care to our rescues in foster care. All we need from
+        you is your love, patience and time.
+
+        \n\nWe are ever so grateful to all of our foster families for all the love and support they provide on a regular basis.
+
+        \n\nPlease note to foster a dog all children must be above the age of 8 years old. We require ALL vetting information on previous or past pets.</string>
+
+    <string name="ready_to_adopt">Ready to Adopt?</string>
+    <string name="adopt_body">It\'s important for you to know that not all rescue dogs/animals are old, abused, or sick. There are so many healthy young vibrant animals
+        sitting in high kill shelters right now, for no other reason than they are homeless. Too many times people will purchase a pet then become overwhelmed and drop them
+        off at the nearest shelter or rescue. Please contact your local rescues before visiting breeders!
+
+        \n\nBefore taking on that furry friend one should consider many things. Caring for a dog is more than simply providing food and water; it requires a lot of time and hard
+        work. This responsibility should not be entered into lightly. If you plan to adopt a dog you should understand that you are making a commitment to that animal for
+        the rest of his life. Shelters are full of dogs brought in by people who were not ready for the responsibility and time involved in taking care of them. Or they
+        plainly had unrealistic expectations. You should do a lot of research and talk to people who know what you are about to get into before you just dive right in.
+
+        \n\nPlease note to adopt a dog all children in the household must be above the age of 8 years old.
+        \nYes we do have an adoption fee for all dogs.
+        \nWe require ALL vetting information on previous or past pets.</string>
+
+    <string name="keep_in_mind">Keep in mind these key points when deciding if a dog is right for you and your family</string>
+    <string name="keep_in_mind_body">* Supplies - In addition to food, dogs need treats, collars, leashes, toys, bowls - well the list goes on and on.
+        \n* Veterinary care - Regular trips to the Vet for yearly checkups and to keep immunizations current. You must also be prepared for the unscheduled visits when your dog is ill or injured.
+        \n* Training - Most if not all dogs need to be trained if you want to the behavior you desire. You can train your dog yourself but obedience classes are highly recommended because the help socialize your dog to many different types of people and other dogs.
+        \n* Daily exercise - You should have the time to walk your dog twice a day for 30 minutes or more depending on the size and energy level of your dog. Daily exercise will keep your dog happy and healthy.
+        \n* Grooming - Dogs require regular baths and grooming. Depending on the type of dog you have daily brushing may be necessary. Some breeds need to be taken to a qualified groomer to keep them looking and smelling their best.
+        \n* Size and breed - A major consideration for anyone contemplating adopting a dog is the dogs size and breed. Many breeds have certain traits that go with the territory. For instant Chihuahuas are notorious for yapping. Working dogs like Shepherd\'s, Collies and mixed breeds need a lot of exercise. It is very wise for an individual to do some research related to dogs before adopting one. Learning about what to expect can better prepare the new dog owner and thus lead to an easier transition for the dog. The decision to adopt a dog should not be made without first giving some deep thought to all that is involved. Take the time to find a dog that will fit into your lifestyle. The decision to adopt a dog should be made by all family members involved, even the children. Dogs are like people, they are not perfect and they do make mistakes. Before you decide to adopt a dog consider whether you can be as forgiving toward your dog as he will be toward you. If you are prepared for the responsibility and the unconditional love, then it\'s time to go adopt your new best friend!</string>
+
+    <string name="adoption_fee">Why do we charge an adoption fee?</string>
+    <string name="fee_body">The sad reality is that we get the unwanted, unvetted, uncared for. We have had and still have many adult dogs most of whom came to us in need of
+        medical care. Veterinary costs for the special cases can run into thousands of dollars.  Younger healthier dogs may not have quite the same health issues as the older
+        dogs do but they too need to be examined, vaccinated and altered prior to adoption. They could also have problems like eye surgery, lump removals, diabetic. The
+        adoption fee only partially covers these costs. Donations from the public are limited. Just Paws Animal Rescue offset the difference through fundraising efforts where
+        we can.</string>
+
+    <string name="process">Brief Description of the Application Process</string>
+    <string name="process_body">Submit the Adoption Application found on our website.
+        \nYou will receive confirmation your application was received, normally within 24 hours. (Please remember we are all volunteers)
+        \nReference check is performed.
+        \nThe Adoption Coordinator will review your application again to determine all is in order.
+        \nArrangements will be made for a home check. During the home check ALL members of the household MUST be in attendance.
+        \nIf we believe your family is a potential match, an email will be sent to you and the foster to arrange for you to meet the dog. If they do not, the Adoption
+        Coordinator may recommend other dogs.</string>
+
+    <string name="matching">SUPPORT AND MATCHING YOU WITH THE RIGHT DOG</string>
+    <string name="matching_body">Each dog is special and unique and we look at the whole picture when matching our dogs with their new family. We look for homes where our dogs
+        will be treated as a member of the family. That includes guiding them to be successful in their new home by providing love, leadership, daily human interaction,
+        exercise and possible training. This also means the dog will not be left outside during the day or for long periods of time even when you are home. Most every dog we
+        have rescued was a dog left outdoors and they jumped the fence, dug their way out, or found some other way to escape their yard. So as not to risk our dogs being
+        picked up by animal control or worse, running the streets and potentially hit and killed by a car, we adopt to only inside homes.
+        \n\nOur team works closely and carefully with each applicant to do our best to make the best match possible for you and your family. If you apply to adopt a specific
+        dog and we believe strongly that the particular dog is not the right match for you, we will always give you our feedback and reason. We have been very successful in
+        making great matches and rely on our team of foster caregivers to help us.
+        \n\nNot every dog is meant for every situation and home. Some dogs will do well living in an apartment while others, even though we do not adopt to outside only homes,
+        need a yard to run and play in with their family. Some dogs may require a 8" fence while others will do fine with a 4" fence.There are usually other extenuating
+        circumstances that play in our decision and we will always discuss those with you.
+        \n\nWe love adopting to families with children but we know that some dogs are not suited to live with small children and we try to take special care when placing dogs
+        and puppies in a home with small children. All dogs must remain leashed and children watched at all times. Please rely on the foster caregiver of the dog you are
+        interested in adopting because they will be your greatest resource for the best match and we support our foster caregivers in their assessment of the home their
+        foster dog goes to.
+        \n\nThe foster caregiver will always be your best resource if questions arise but every member of our Team is available by email or phone call should you ever have
+        questions after your dog has gone home.
+        \n\nPlease see adoption/foster application above.</string>
+
+    <string name="adoption_foster_form">Dog Foster/Adoption Form</string>
+</resources>
