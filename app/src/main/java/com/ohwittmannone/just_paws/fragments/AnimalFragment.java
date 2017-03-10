@@ -1,6 +1,5 @@
 package com.ohwittmannone.just_paws.fragments;
 
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.MenuItemCompat;
@@ -14,11 +13,11 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.ProgressBar;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -31,6 +30,7 @@ import com.ohwittmannone.just_paws.models.AnimalType;
 import com.ohwittmannone.just_paws.utils.Common;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import static com.google.android.gms.internal.zzs.TAG;
 
@@ -40,8 +40,7 @@ import static com.google.android.gms.internal.zzs.TAG;
 
 public class AnimalFragment extends Fragment{
 
-    ArrayList<AnimalType> animal = new ArrayList<>();
-    ArrayList<AnimalType> filteredanimal = new ArrayList<>();
+    ArrayList<AnimalType> mAnimalModelList = new ArrayList<>();
 
     private RecyclerView mRecyclerView;
     private AnimalAdapter animalAdapter;
@@ -52,11 +51,15 @@ public class AnimalFragment extends Fragment{
 
     DatabaseReference mDatabaseReference;
 
+    private ChildEventListener mChildEventListener;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
+        getAnimals();
         getFavourites();
+        //retrieve();
     }
 
     @Override
@@ -68,12 +71,8 @@ public class AnimalFragment extends Fragment{
         //cardview
         mRecyclerView = (RecyclerView)rootView.findViewById(R.id.card_view);
 
-        //setup firebase
-        mDatabaseReference = FirebaseDatabase.getInstance().getReference(Common.ANIMALTYPE);
-
-        //create adapter class
         //mCardAdapter = new AnimalAdapter(mAimalTypeList);
-        animalAdapter = new AnimalAdapter(getActivity().getApplicationContext(),retrieve());
+        animalAdapter = new AnimalAdapter(getActivity().getApplicationContext(), mAnimalModelList);
         mRecyclerView.setAdapter(animalAdapter);
 
         //add linear layout manager
@@ -109,40 +108,59 @@ public class AnimalFragment extends Fragment{
     }
 
 
-    //Read
-    public ArrayList<AnimalType> retrieve(){
-        mDatabaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+
+    private void getAnimals(){
+        mChildEventListener = new ChildEventListener() {
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                fetchData(dataSnapshot);
-                Log.i(TAG, "onChildAdded");
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                final AnimalType animalItem = (AnimalType)dataSnapshot.getValue(AnimalType.class);
+                mAnimalModelList.add(animalItem);
+
+                animalAdapter.reset(mAnimalModelList);
+                mRecyclerView.setVisibility(View.VISIBLE);
+                progressBar.setVisibility(View.GONE);
             }
 
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+                AnimalType animalItem = (AnimalType)dataSnapshot.getValue(AnimalType.class);
+                for (int i = 0; i < mAnimalModelList.size(); i++){
+                    AnimalType animal = mAnimalModelList.get(i);
+                    if(animalItem.getId().equals(animalItem.getId())){
+                        mAnimalModelList.set(i, animalItem);
+                        break;
+                    }
+
+                    animalAdapter.reset(mAnimalModelList);
+                }
+
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+                final AnimalType animalItem = (AnimalType)dataSnapshot.getValue(AnimalType.class);
+                for (Iterator<AnimalType> iterator = mAnimalModelList.iterator(); iterator.hasNext();){
+                    AnimalType animalType = iterator.next();
+                    if (animalType.getId().equals(animalItem.getId())){
+                        iterator.remove();
+                        break;
+                    }
+                }
+                animalAdapter.reset(mAnimalModelList);
+
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+            }
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
 
             }
-        });
-        return animal;
-    }
-
-    private void fetchData (DataSnapshot dataSnapshot){
-        animal.clear();
-        for (DataSnapshot ds : dataSnapshot.getChildren()){
-            AnimalType animalType = new AnimalType();
-            animalType.setId(ds.getValue(AnimalType.class).getId());
-            animalType.setPetInfo(ds.getValue(AnimalType.class).getPetInfo());
-            animalType.setImgURL(ds.getValue(AnimalType.class).getImgURL());
-            animalType.setPetName(ds.getValue(AnimalType.class).getPetName());
-
-            animal.add(0, animalType);
-            animalAdapter.notifyDataSetChanged();
-            mRecyclerView.setVisibility(View.VISIBLE);
-            progressBar.setVisibility(View.GONE);
-
-
-        }
+        };
+        FirebaseDatabase.getInstance().getReference(Common.ANIMALTYPE).addChildEventListener(mChildEventListener);
     }
 
     public void getFavourites(){
