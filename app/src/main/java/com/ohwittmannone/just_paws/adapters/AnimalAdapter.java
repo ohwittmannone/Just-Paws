@@ -71,23 +71,14 @@ public class AnimalAdapter extends RecyclerView.Adapter<AnimalAdapter.ViewHolder
             Integer position = getAdapterPosition();
             intent.putExtra("CARDVIEW_POSITION", position);
 
-
-            //animation
-            /*String transitionName = v.getResources().getString(R.string.transition_string);
-            View viewStart = v.findViewById(R.id.entire_card);
-            ActivityOptionsCompat options =
-                    ActivityOptionsCompat.makeSceneTransitionAnimation((Activity)mContext, viewStart, transitionName);
-*/
             v.getContext().startActivity(intent);
-
-            //v.getContext().startActivity(intent, options.toBundle());
         }
     }
 
     //constructor
     public AnimalAdapter(Context mContext, List<AnimalType> animals){
         this.mContext = mContext;
-        this.mDisplayListData = animals;
+        //this.mDisplayListData = animals;
         this.mDataOriginalCopy = animals;
 
     }
@@ -194,7 +185,7 @@ public class AnimalAdapter extends RecyclerView.Adapter<AnimalAdapter.ViewHolder
         if (mCurrentSearchText != null && !mCurrentSearchText.isEmpty()){
             String text = mCurrentSearchText.toLowerCase();
             for (AnimalType item : mDataOriginalCopy){
-                if(item.getPetName().toLowerCase().contains(text));{
+                if(item.getPetName().toLowerCase().contains(text)){
                     mDisplayListData.add(item);
                 }
             }
@@ -208,6 +199,12 @@ public class AnimalAdapter extends RecyclerView.Adapter<AnimalAdapter.ViewHolder
 
     public void setCurrentSearchText (String text){
         mCurrentSearchText = text;
+        generateData();
+    }
+
+    //call this method when the server data is changed
+    public void reset(List<AnimalType> data){
+        this.mDataOriginalCopy = data;
         generateData();
     }
 
