@@ -6,7 +6,6 @@ import android.support.v4.view.MenuItemCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -14,6 +13,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -32,8 +32,6 @@ import com.ohwittmannone.just_paws.utils.Common;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-import static com.google.android.gms.internal.zzs.TAG;
-
 /**
  * Created by Courtney on 2017-02-20.
  */
@@ -49,9 +47,12 @@ public class AnimalFragment extends Fragment{
     private DatabaseReference reference;
     private ArrayList<String> favouritesList;
 
-    DatabaseReference mDatabaseReference;
-
     private ChildEventListener mChildEventListener;
+
+    public final static int SHOW_FAV = 0;
+    public final static int NO_FAV = 1;
+    private boolean isFavourite;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -59,7 +60,6 @@ public class AnimalFragment extends Fragment{
         setHasOptionsMenu(true);
         getAnimals();
         getFavourites();
-        //retrieve();
     }
 
     @Override
@@ -80,7 +80,6 @@ public class AnimalFragment extends Fragment{
         mRecyclerView.setLayoutManager(mCardLayoutManager);
 
         progressBar = (ProgressBar)rootView.findViewById(R.id.progressbardog);
-
 
         return rootView;
     }
@@ -106,6 +105,32 @@ public class AnimalFragment extends Fragment{
             }
         });
     }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item){
+        int id = item.getItemId();
+
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if(id == R.id.fav_toggle && user != null){
+            if(!isFavourite) {
+                item.setIcon(R.drawable.ic_favorite_white_36dp);
+                animalAdapter.setFavToggle(SHOW_FAV);
+                isFavourite = true;
+            }
+            else{
+                item.setIcon(R.drawable.ic_favorite_border_white_36dp);
+                animalAdapter.setFavToggle(NO_FAV);
+                isFavourite = false;
+            }
+            return true;
+        }
+        else {
+            Toast.makeText(getContext().getApplicationContext(), "Login to filter by favourites", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+    }
+
 
 
 
@@ -184,8 +209,6 @@ public class AnimalFragment extends Fragment{
             });
         }
     }
-
-
 
 
 }

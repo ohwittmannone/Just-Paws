@@ -71,21 +71,6 @@ public class MainActivity extends BaseCompatActivity
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
-
-
-        /*mAuthListener = new FirebaseAuth.AuthStateListener() {
-            @Override
-            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-                FirebaseUser user = firebaseAuth.getCurrentUser();
-                if (user != null) {
-                    // User is signed in
-                    Common.LOGGED = true;
-                } else {
-                    // User is signed out
-                    Common.LOGGED = false;
-                }
-            }
-        };*/
         refreshState();
 
 

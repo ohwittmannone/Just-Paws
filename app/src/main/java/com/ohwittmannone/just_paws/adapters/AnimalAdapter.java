@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -23,7 +24,11 @@ import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+
+import static com.ohwittmannone.just_paws.fragments.AnimalFragment.NO_FAV;
+import static com.ohwittmannone.just_paws.fragments.AnimalFragment.SHOW_FAV;
 
 /**
  * Created by Courtney on 2016-10-24.
@@ -41,6 +46,8 @@ public class AnimalAdapter extends RecyclerView.Adapter<AnimalAdapter.ViewHolder
 
     private FirebaseAuth.AuthStateListener authListener;
     private DatabaseReference reference;
+
+    private int mCurrentFavType = 1;
 
 
 
@@ -194,6 +201,16 @@ public class AnimalAdapter extends RecyclerView.Adapter<AnimalAdapter.ViewHolder
             mDisplayListData.addAll(mDataOriginalCopy);
         }
 
+        //check fav toggle
+        if (mCurrentFavType == SHOW_FAV ){
+            for (Iterator<AnimalType> iterator = mDisplayListData.iterator(); iterator.hasNext();){
+                AnimalType item = iterator.next();
+                if(favouritesList != null && !favouritesList.contains(item.getId())){
+                    iterator.remove();
+                }
+            }
+        }
+
         notifyDataSetChanged();
     }
 
@@ -212,6 +229,15 @@ public class AnimalAdapter extends RecyclerView.Adapter<AnimalAdapter.ViewHolder
     //return size of dataset
     public int getItemCount(){
         return mDisplayListData.size();
+    }
+
+    public void setFavToggle(int type){
+        mCurrentFavType = type;
+        generateData();
+    }
+
+    public int getmCurrentFavType(){
+        return mCurrentFavType;
     }
 
 }
