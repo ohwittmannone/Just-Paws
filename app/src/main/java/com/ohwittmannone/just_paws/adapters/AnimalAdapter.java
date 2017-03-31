@@ -14,11 +14,16 @@ import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.ohwittmannone.just_paws.DetailCardLayout;
+import com.ohwittmannone.just_paws.admin.EditAnimalActivity;
 import com.ohwittmannone.just_paws.models.AnimalType;
 import com.ohwittmannone.just_paws.R;
+import com.ohwittmannone.just_paws.models.User;
 import com.ohwittmannone.just_paws.utils.Common;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
@@ -42,6 +47,8 @@ public class AnimalAdapter extends RecyclerView.Adapter<AnimalAdapter.ViewHolder
 
     private String mCurrentSearchText;
 
+    private Boolean adminStatus;
+
     private List<String> favouritesList;
 
     private FirebaseAuth.AuthStateListener authListener;
@@ -53,7 +60,7 @@ public class AnimalAdapter extends RecyclerView.Adapter<AnimalAdapter.ViewHolder
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         public TextView petInfo;
-        public ImageView imgURL, btnFavourite;
+        public ImageView imgURL, btnFavourite, btnEdit;
         public ProgressBar progressBar;
 
         private Context itemContext;
@@ -63,6 +70,7 @@ public class AnimalAdapter extends RecyclerView.Adapter<AnimalAdapter.ViewHolder
             petInfo = (TextView) v.findViewById(R.id.pet_description);
             progressBar = (ProgressBar) v.findViewById(R.id.progressbar);
             btnFavourite = (ImageView) v.findViewById(R.id.favouriteBtn);
+            btnEdit = (ImageView) v.findViewById(R.id.editBtn);
 
             itemContext = v.getContext();
 
@@ -130,6 +138,7 @@ public class AnimalAdapter extends RecyclerView.Adapter<AnimalAdapter.ViewHolder
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         //if user logged in
         if (user != null) {
+
             //first check if favourited
             if (favouritesList != null && favouritesList.contains(animalModel.getId())) {
                 holder.btnFavourite.setImageResource(R.drawable.ic_favorite_white_36dp);
@@ -161,6 +170,34 @@ public class AnimalAdapter extends RecyclerView.Adapter<AnimalAdapter.ViewHolder
                 }
             });
 
+            reference = FirebaseDatabase.getInstance().getReference(Common.USER).child(userUid);
+            reference.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    User userModel = dataSnapshot.getValue(User.class);
+                    adminStatus = userModel.isAdmin();
+                    if(adminStatus){
+                        holder.btnEdit.setVisibility(View.VISIBLE);
+                    }
+                    else {
+                        holder.btnEdit.setVisibility(View.GONE);
+                    }
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
+            });
+            holder.btnEdit.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(view.getContext(), EditAnimalActivity.class);
+                    intent.putExtra("ANIMAL_ID", animalModel.getId());
+                    view.getContext().startActivity(intent);
+                }
+            });
+
         } else {
             //if user not logged in
             holder.btnFavourite.setOnClickListener(new View.OnClickListener() {
@@ -169,8 +206,8 @@ public class AnimalAdapter extends RecyclerView.Adapter<AnimalAdapter.ViewHolder
                     Toast.makeText(mContext, "Login to favourite", Toast.LENGTH_SHORT).show();
                 }
             });
+            holder.btnEdit.setVisibility(View.GONE);
         }
-
 
     }
 

@@ -164,6 +164,7 @@ public class RegisterActivity extends BaseCompatActivity {
         User userModel = new User();
         userModel.setEmail(email);
         userModel.setName(name);
+        userModel.setAdmin(false);
 
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("User").child(user.getUid());

@@ -1,5 +1,6 @@
 package com.ohwittmannone.just_paws;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -18,7 +19,9 @@ import com.google.firebase.database.GenericTypeIndicator;
 import com.google.firebase.database.ValueEventListener;
 import com.ohwittmannone.just_paws.Picasso.PicassoClient;
 import com.ohwittmannone.just_paws.adapters.AnimalAdapter;
+import com.ohwittmannone.just_paws.admin.EditAnimalActivity;
 import com.ohwittmannone.just_paws.models.AnimalType;
+import com.ohwittmannone.just_paws.models.User;
 import com.ohwittmannone.just_paws.utils.Common;
 
 import java.util.ArrayList;
@@ -31,11 +34,14 @@ import java.util.List;
 public class DetailCardLayout extends AppCompatActivity {
 
     private Integer position;
+
+    private Boolean adminStatus;
+
     public List<AnimalType> mAnimalList;
     private List<String> favouritesList;
 
     private TextView petInfo, petName;
-    private ImageView imgURL, btnFavourite;
+    private ImageView imgURL, btnFavourite, btnEdit;
     public ImageView btnBack;
 
     private DatabaseReference reference;
@@ -79,13 +85,46 @@ public class DetailCardLayout extends AppCompatActivity {
             }
         });
 
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        btnEdit = (ImageView) findViewById(R.id.editAnimal);
+        if (user != null){
+            btnEdit.setVisibility(View.VISIBLE);
+
+            String userUid = user.getUid();
+            reference = FirebaseDatabase.getInstance().getReference(Common.USER).child(userUid);
+            reference.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    User userModel = dataSnapshot.getValue(User.class);
+                    adminStatus = userModel.isAdmin();
+                    if(adminStatus){
+                        btnEdit.setVisibility(View.VISIBLE);
+                    }
+                    else {
+                        btnEdit.setVisibility(View.GONE);
+                    }
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
+            });
+
+        }
+        else {
+            btnEdit.setVisibility(View.GONE);
+        }
+        btnEdit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(DetailCardLayout.this, EditAnimalActivity.class);
+                intent.putExtra("ANIMAL_ID", mAnimalList.get(position).getId());
+                startActivity(intent);
+            }
+        });
+
         new myTask().execute();
-
-
-
-
-
-
 
     }
 

@@ -13,4 +13,10 @@
         app:showAsAction="always"
         android:actionViewClass="android.widget.ImageView"
         />
+    <item android:id="@+id/add_btn"
+        android:title="Add Button"
+        android:icon="@drawable/ic_add_white_36dp"
+        app:showAsAction="always"
+        android:actionViewClass="android.widget.ImageView"
+        android:visible="false" />
 </menu>

@@ -12,6 +12,7 @@ public class User {
     private String id;
     private String name;
     private List<String> favourite;
+    private boolean admin;
 
     public String getEmail() {
         return email;
@@ -43,5 +44,15 @@ public class User {
 
     public void setFavourite(List<String> favourite) {
         this.favourite = favourite;
+    }
+
+
+
+    public boolean isAdmin() {
+        return admin;
+    }
+
+    public void setAdmin(boolean admin) {
+        this.admin = admin;
     }
 }

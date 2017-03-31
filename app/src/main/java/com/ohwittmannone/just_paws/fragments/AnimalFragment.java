@@ -1,5 +1,6 @@
 package com.ohwittmannone.just_paws.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.MenuItemCompat;
@@ -24,6 +25,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.GenericTypeIndicator;
 import com.google.firebase.database.ValueEventListener;
+import com.ohwittmannone.just_paws.admin.AddAnimalActivity;
 import com.ohwittmannone.just_paws.R;
 import com.ohwittmannone.just_paws.adapters.AnimalAdapter;
 import com.ohwittmannone.just_paws.models.AnimalType;
@@ -36,7 +38,9 @@ import java.util.Iterator;
  * Created by Courtney on 2017-02-20.
  */
 
-public class AnimalFragment extends Fragment{
+public class AnimalFragment extends Fragment {
+
+    private MenuItem addAnimalBtn;
 
     ArrayList<AnimalType> mAnimalModelList = new ArrayList<>();
 
@@ -69,7 +73,7 @@ public class AnimalFragment extends Fragment{
         View rootView = inflater.inflate(R.layout.fragment_animals, container, false);
 
         //cardview
-        mRecyclerView = (RecyclerView)rootView.findViewById(R.id.card_view);
+        mRecyclerView = (RecyclerView) rootView.findViewById(R.id.card_view);
 
         //mCardAdapter = new AnimalAdapter(mAimalTypeList);
         animalAdapter = new AnimalAdapter(getActivity().getApplicationContext(), mAnimalModelList);
@@ -79,49 +83,62 @@ public class AnimalFragment extends Fragment{
         mCardLayoutManager = new LinearLayoutManager(getActivity());
         mRecyclerView.setLayoutManager(mCardLayoutManager);
 
-        progressBar = (ProgressBar)rootView.findViewById(R.id.progressbardog);
+        progressBar = (ProgressBar) rootView.findViewById(R.id.progressbardog);
 
         return rootView;
     }
 
     @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater){
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
         menu.clear();
         inflater.inflate(R.menu.main, menu);
         MenuItem searchItem = menu.findItem(R.id.search);
         SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener(){
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
-            public boolean onQueryTextSubmit(String query){
+            public boolean onQueryTextSubmit(String query) {
                 animalAdapter.setCurrentSearchText(query);
                 return true;
             }
 
             @Override
-            public boolean onQueryTextChange(String newText){
+            public boolean onQueryTextChange(String newText) {
                 animalAdapter.setCurrentSearchText(newText);
                 return false;
             }
         });
+
+        addAnimalBtn = menu.findItem(R.id.add_btn);
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if (user != null){
+            addAnimalBtn.setVisible(true);
+        }
+        else {
+            addAnimalBtn.setVisible(false);
+        }
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item){
+    public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
 
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        if(id == R.id.fav_toggle && user != null){
-            if(!isFavourite) {
+        if (id == R.id.fav_toggle && user != null) {
+            if (!isFavourite) {
                 item.setIcon(R.drawable.ic_favorite_white_36dp);
                 animalAdapter.setFavToggle(SHOW_FAV);
                 isFavourite = true;
-            }
-            else{
+            } else {
                 item.setIcon(R.drawable.ic_favorite_border_white_36dp);
                 animalAdapter.setFavToggle(NO_FAV);
                 isFavourite = false;
             }
+            return true;
+        }
+        else if (id == R.id.add_btn && user != null){
+            Intent intent = new Intent(getActivity(), AddAnimalActivity.class);
+            startActivity(intent);
             return true;
         }
         else {
@@ -132,13 +149,11 @@ public class AnimalFragment extends Fragment{
     }
 
 
-
-
-    private void getAnimals(){
+    private void getAnimals() {
         mChildEventListener = new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                final AnimalType animalItem = (AnimalType)dataSnapshot.getValue(AnimalType.class);
+                final AnimalType animalItem = (AnimalType) dataSnapshot.getValue(AnimalType.class);
                 mAnimalModelList.add(animalItem);
 
                 animalAdapter.reset(mAnimalModelList);
@@ -148,10 +163,10 @@ public class AnimalFragment extends Fragment{
 
             @Override
             public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-                AnimalType animalItem = (AnimalType)dataSnapshot.getValue(AnimalType.class);
-                for (int i = 0; i < mAnimalModelList.size(); i++){
+                AnimalType animalItem = (AnimalType) dataSnapshot.getValue(AnimalType.class);
+                for (int i = 0; i < mAnimalModelList.size(); i++) {
                     AnimalType animal = mAnimalModelList.get(i);
-                    if(animalItem.getId().equals(animalItem.getId())){
+                    if (animalItem.getId().equals(animalItem.getId())) {
                         mAnimalModelList.set(i, animalItem);
                         break;
                     }
@@ -163,10 +178,10 @@ public class AnimalFragment extends Fragment{
 
             @Override
             public void onChildRemoved(DataSnapshot dataSnapshot) {
-                final AnimalType animalItem = (AnimalType)dataSnapshot.getValue(AnimalType.class);
-                for (Iterator<AnimalType> iterator = mAnimalModelList.iterator(); iterator.hasNext();){
+                final AnimalType animalItem = (AnimalType) dataSnapshot.getValue(AnimalType.class);
+                for (Iterator<AnimalType> iterator = mAnimalModelList.iterator(); iterator.hasNext(); ) {
                     AnimalType animalType = iterator.next();
-                    if (animalType.getId().equals(animalItem.getId())){
+                    if (animalType.getId().equals(animalItem.getId())) {
                         iterator.remove();
                         break;
                     }
@@ -188,18 +203,20 @@ public class AnimalFragment extends Fragment{
         FirebaseDatabase.getInstance().getReference(Common.ANIMALTYPE).addChildEventListener(mChildEventListener);
     }
 
-    public void getFavourites(){
+    public void getFavourites() {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
-        if (user != null){
+        if (user != null) {
             String userUid = user.getUid();
             reference = FirebaseDatabase.getInstance().getReference(Common.USER).child(userUid).child(Common.FAVOURITE);
             reference.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
-                    GenericTypeIndicator<ArrayList<String>> t = new GenericTypeIndicator<ArrayList<String>>() {};
-                    favouritesList = (ArrayList<String>)dataSnapshot.getValue(t);
-                        animalAdapter.setFavouritesList(favouritesList);
+                    GenericTypeIndicator<ArrayList<String>> t = new GenericTypeIndicator<ArrayList<String>>() {
+                    };
+                    favouritesList = (ArrayList<String>) dataSnapshot.getValue(t);
+
+                    animalAdapter.setFavouritesList(favouritesList);
                 }
 
                 @Override
