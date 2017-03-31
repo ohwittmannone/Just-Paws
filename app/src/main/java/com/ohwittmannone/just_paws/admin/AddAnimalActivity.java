@@ -5,6 +5,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -61,6 +62,7 @@ public class AddAnimalActivity extends BaseCompatActivity {
         animalType.setId(reference.getKey());
         reference.setValue(animalType);
         hideProgress();
+        Toast.makeText(AddAnimalActivity.this, "Animal added", Toast.LENGTH_SHORT).show();
         finish();
     }
 }

@@ -11,7 +11,7 @@ public class User {
     private String email;
     private String id;
     private String name;
-    private List<String> favourite;
+    private List<String> favourites;
     private boolean admin;
 
     public String getEmail() {
@@ -38,12 +38,12 @@ public class User {
         this.name = name;
     }
 
-    public List<String> getFavourite() {
-        return favourite;
+    public List<String> getFavourites() {
+        return favourites;
     }
 
-    public void setFavourite(List<String> favourite) {
-        this.favourite = favourite;
+    public void setFavourites(List<String> favourites) {
+        this.favourites = favourites;
     }
 
 

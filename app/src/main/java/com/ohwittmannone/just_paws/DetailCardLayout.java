@@ -1,8 +1,10 @@
 package com.ohwittmannone.just_paws;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ImageView;
@@ -16,15 +18,18 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.GenericTypeIndicator;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.ohwittmannone.just_paws.Picasso.PicassoClient;
 import com.ohwittmannone.just_paws.adapters.AnimalAdapter;
+import com.ohwittmannone.just_paws.admin.AdminUtils;
 import com.ohwittmannone.just_paws.admin.EditAnimalActivity;
 import com.ohwittmannone.just_paws.models.AnimalType;
 import com.ohwittmannone.just_paws.models.User;
 import com.ohwittmannone.just_paws.utils.Common;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -41,7 +46,7 @@ public class DetailCardLayout extends AppCompatActivity {
     private List<String> favouritesList;
 
     private TextView petInfo, petName;
-    private ImageView imgURL, btnFavourite, btnEdit;
+    private ImageView imgURL, btnFavourite, btnEdit, btnDelete;
     public ImageView btnBack;
 
     private DatabaseReference reference;
@@ -87,6 +92,7 @@ public class DetailCardLayout extends AppCompatActivity {
 
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         btnEdit = (ImageView) findViewById(R.id.editAnimal);
+        btnDelete = (ImageView) findViewById(R.id.deleteAnimal);
         if (user != null){
             btnEdit.setVisibility(View.VISIBLE);
 
@@ -99,9 +105,11 @@ public class DetailCardLayout extends AppCompatActivity {
                     adminStatus = userModel.isAdmin();
                     if(adminStatus){
                         btnEdit.setVisibility(View.VISIBLE);
+                        btnDelete.setVisibility(View.VISIBLE);
                     }
                     else {
                         btnEdit.setVisibility(View.GONE);
+                        btnDelete.setVisibility(View.GONE);
                     }
                 }
 
@@ -114,6 +122,7 @@ public class DetailCardLayout extends AppCompatActivity {
         }
         else {
             btnEdit.setVisibility(View.GONE);
+            btnDelete.setVisibility(View.GONE);
         }
         btnEdit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -121,6 +130,37 @@ public class DetailCardLayout extends AppCompatActivity {
                 Intent intent = new Intent(DetailCardLayout.this, EditAnimalActivity.class);
                 intent.putExtra("ANIMAL_ID", mAnimalList.get(position).getId());
                 startActivity(intent);
+            }
+        });
+
+        btnDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(DetailCardLayout.this);
+                builder.setMessage("Are you sure you want to delete " + mAnimalList.get(position).getPetName() + "?")
+                        .setTitle("Delete Animal");
+
+                builder.setPositiveButton("Delete", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        //user clicked delete
+                        AdminUtils.deleteAnimal(mAnimalList.get(position).getId(), DetailCardLayout.this);
+                        dialogInterface.dismiss();
+                        Intent intent = new Intent(DetailCardLayout.this, MainActivity.class);
+                        startActivity(intent);
+                    }
+                });
+
+                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        //user cancelled
+                        dialogInterface.dismiss();
+                    }
+                });
+
+                AlertDialog dialog = builder.create();
+                dialog.show();
             }
         });
 
@@ -211,6 +251,5 @@ public class DetailCardLayout extends AppCompatActivity {
     public void setFavouritesList(List<String> favouritesList){
         this.favouritesList = favouritesList;
     }
-
 
 }

@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -20,6 +19,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.ohwittmannone.just_paws.DetailCardLayout;
+import com.ohwittmannone.just_paws.admin.AdminUtils;
 import com.ohwittmannone.just_paws.admin.EditAnimalActivity;
 import com.ohwittmannone.just_paws.models.AnimalType;
 import com.ohwittmannone.just_paws.R;
@@ -32,7 +32,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import static com.ohwittmannone.just_paws.fragments.AnimalFragment.NO_FAV;
 import static com.ohwittmannone.just_paws.fragments.AnimalFragment.SHOW_FAV;
 
 /**
@@ -52,7 +51,7 @@ public class AnimalAdapter extends RecyclerView.Adapter<AnimalAdapter.ViewHolder
     private List<String> favouritesList;
 
     private FirebaseAuth.AuthStateListener authListener;
-    private DatabaseReference reference;
+    private DatabaseReference reference, reference2;
 
     private int mCurrentFavType = 1;
 
@@ -60,7 +59,7 @@ public class AnimalAdapter extends RecyclerView.Adapter<AnimalAdapter.ViewHolder
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         public TextView petInfo;
-        public ImageView imgURL, btnFavourite, btnEdit;
+        public ImageView imgURL, btnFavourite, btnEdit, btnDelete;
         public ProgressBar progressBar;
 
         private Context itemContext;
@@ -71,6 +70,7 @@ public class AnimalAdapter extends RecyclerView.Adapter<AnimalAdapter.ViewHolder
             progressBar = (ProgressBar) v.findViewById(R.id.progressbar);
             btnFavourite = (ImageView) v.findViewById(R.id.favouriteBtn);
             btnEdit = (ImageView) v.findViewById(R.id.editBtn);
+            btnDelete = (ImageView) v.findViewById(R.id.deleteBtn);
 
             itemContext = v.getContext();
 
@@ -170,17 +170,19 @@ public class AnimalAdapter extends RecyclerView.Adapter<AnimalAdapter.ViewHolder
                 }
             });
 
-            reference = FirebaseDatabase.getInstance().getReference(Common.USER).child(userUid);
-            reference.addValueEventListener(new ValueEventListener() {
+            reference2 = FirebaseDatabase.getInstance().getReference(Common.USER).child(userUid);
+            reference2.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     User userModel = dataSnapshot.getValue(User.class);
                     adminStatus = userModel.isAdmin();
                     if(adminStatus){
                         holder.btnEdit.setVisibility(View.VISIBLE);
+                        holder.btnDelete.setVisibility(View.VISIBLE);
                     }
                     else {
                         holder.btnEdit.setVisibility(View.GONE);
+                        holder.btnDelete.setVisibility(View.GONE);
                     }
                 }
 
@@ -198,6 +200,13 @@ public class AnimalAdapter extends RecyclerView.Adapter<AnimalAdapter.ViewHolder
                 }
             });
 
+            holder.btnDelete.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    AdminUtils.deleteAnimal(animalModel.getId(), view.getContext());
+                }
+            });
+
         } else {
             //if user not logged in
             holder.btnFavourite.setOnClickListener(new View.OnClickListener() {
@@ -207,6 +216,7 @@ public class AnimalAdapter extends RecyclerView.Adapter<AnimalAdapter.ViewHolder
                 }
             });
             holder.btnEdit.setVisibility(View.GONE);
+            holder.btnDelete.setVisibility(View.GONE);
         }
 
     }

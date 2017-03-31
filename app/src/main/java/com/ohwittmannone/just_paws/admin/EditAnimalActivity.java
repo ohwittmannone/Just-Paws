@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -102,6 +103,7 @@ public class EditAnimalActivity extends BaseCompatActivity {
         reference.setValue(animalType);
         hideProgress();
         Intent intent = new Intent(EditAnimalActivity.this, MainActivity.class);
+        Toast.makeText(EditAnimalActivity.this, "Animal edited", Toast.LENGTH_SHORT).show();
         startActivity(intent);
 
     }
