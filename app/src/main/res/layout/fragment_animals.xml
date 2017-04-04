@@ -22,8 +22,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:visibility="gone"
-        app:stackFromEnd="true"
-        app:reverseLayout="true">
+        app:stackFromEnd="true">
 
     </android.support.v7.widget.RecyclerView>
 

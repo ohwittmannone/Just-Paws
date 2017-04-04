@@ -46,7 +46,7 @@ public class AnimalFragment extends Fragment {
 
     private RecyclerView mRecyclerView;
     private AnimalAdapter animalAdapter;
-    private RecyclerView.LayoutManager mCardLayoutManager;
+    private LinearLayoutManager mCardLayoutManager;
     private ProgressBar progressBar;
     private DatabaseReference reference;
     private ArrayList<String> favouritesList;
@@ -81,6 +81,9 @@ public class AnimalFragment extends Fragment {
 
         //add linear layout manager
         mCardLayoutManager = new LinearLayoutManager(getActivity());
+        mCardLayoutManager.setReverseLayout(true);
+        mCardLayoutManager.setStackFromEnd(true);
+
         mRecyclerView.setLayoutManager(mCardLayoutManager);
 
         progressBar = (ProgressBar) rootView.findViewById(R.id.progressbardog);
