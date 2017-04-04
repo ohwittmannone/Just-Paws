@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
@@ -27,11 +28,19 @@ import android.widget.LinearLayout;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.ohwittmannone.just_paws.admin.AdminMgmt;
 import com.ohwittmannone.just_paws.fragments.AboutUsFragment;
 import com.ohwittmannone.just_paws.fragments.AdoptFosterFragment;
 import com.ohwittmannone.just_paws.fragments.AnimalFragment;
 import com.ohwittmannone.just_paws.login.LoginActivity;
+import com.ohwittmannone.just_paws.models.User;
 import com.ohwittmannone.just_paws.utils.Cache;
+import com.ohwittmannone.just_paws.utils.Common;
 
 public class MainActivity extends BaseCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -43,6 +52,10 @@ public class MainActivity extends BaseCompatActivity
     public static String FACEBOOK_PAGE_ID = "690542627671687";
     private FirebaseAuth.AuthStateListener mAuthListener;
 
+    private DatabaseReference reference;
+
+    private Boolean adminStatus;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,6 +63,8 @@ public class MainActivity extends BaseCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         setupCollapsibleToolbar("Adoptable Animals", true);
+
+        new getAdminStatus().execute();
 
         Fragment fragment = null;
         Class fragmentClass = null;
@@ -71,7 +86,7 @@ public class MainActivity extends BaseCompatActivity
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
-        refreshState();
+        //refreshState();
 
 
         //fabs
@@ -261,13 +276,16 @@ public class MainActivity extends BaseCompatActivity
             setupCollapsibleToolbar("Adoptable Animals", true);
             refreshState();
 
+        }else if (id == R.id.adminMgmt){
+            Intent intent = new Intent(this, AdminMgmt.class);
+            startActivity(intent);
         }
         try {
             fragment = (Fragment) fragmentClass.newInstance();
         } catch (Exception e) {
             e.printStackTrace();
         }
-        if (id != R.id.login) {
+        if (id != R.id.login && id != R.id.adminMgmt) {
             FragmentManager fragmentManager = getSupportFragmentManager();
             fragmentManager.beginTransaction().replace(R.id.flContent, fragment).commit();
 
@@ -334,7 +352,8 @@ public class MainActivity extends BaseCompatActivity
 
     }
 
-    private void refreshState() {
+    private void
+    refreshState() {
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
 
         if (!Cache.getInstance(getApplicationContext()).getLoginState()) {
@@ -344,7 +363,12 @@ public class MainActivity extends BaseCompatActivity
             navigationView.getMenu().getItem(0).setChecked(true);
         } else if (Cache.getInstance(getApplicationContext()).getLoginState()) {
             navigationView.getMenu().clear();
-            navigationView.inflateMenu(R.menu.activity_main_drawer_with_logout);
+            if (adminStatus){
+                navigationView.inflateMenu(R.menu.activity_main_drawer_admin_logout);
+            }
+            else {
+                navigationView.inflateMenu(R.menu.activity_main_drawer_with_logout);
+            }
             navigationView.setNavigationItemSelectedListener(this);
             navigationView.getMenu().getItem(0).setChecked(true);
             if (FirebaseAuth.getInstance().getCurrentUser() == null) {
@@ -354,6 +378,31 @@ public class MainActivity extends BaseCompatActivity
             }
         }
 
+    }
+
+    class getAdminStatus extends AsyncTask<Void, Void, Void>{
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+            if (user != null) {
+                reference = FirebaseDatabase.getInstance().getReference(Common.USER).child(user.getUid());
+                reference.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        final User userModel = (User) dataSnapshot.getValue(User.class);
+                        adminStatus = userModel.isAdmin();
+                        refreshState();
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
+            }
+            return null;
+        }
     }
 
 
