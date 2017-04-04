@@ -27,6 +27,7 @@ import com.ohwittmannone.just_paws.admin.EditAnimalActivity;
 import com.ohwittmannone.just_paws.models.AnimalType;
 import com.ohwittmannone.just_paws.models.User;
 import com.ohwittmannone.just_paws.utils.Common;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -161,6 +162,15 @@ public class DetailCardLayout extends AppCompatActivity {
 
                 AlertDialog dialog = builder.create();
                 dialog.show();
+            }
+        });
+
+        imgURL.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(DetailCardLayout.this, AnimalFullscreenActivity.class);
+                intent.putExtra("CARDVIEW_POSITION", position);
+                startActivity(intent);
             }
         });
 

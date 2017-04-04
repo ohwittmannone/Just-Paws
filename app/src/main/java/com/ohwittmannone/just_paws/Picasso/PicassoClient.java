@@ -20,4 +20,13 @@ public class PicassoClient {
             Picasso.with(context).load(R.drawable.placeholder).into(img);
         }
     }
+
+    public static void downloadInsideImage(Context context, String url, ImageView img){
+        if(url != null && url.length()>0){
+            Picasso.with(context).load(url).fit().centerInside().placeholder(R.drawable.placeholder).into(img);
+        }
+        else {
+            Picasso.with(context).load(R.drawable.placeholder).into(img);
+        }
+    }
 }

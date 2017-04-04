@@ -38,6 +38,8 @@
             android:screenOrientation="portrait"/>
         <activity android:name=".admin.AdminMgmt"
             android:screenOrientation="portrait"/>
+        <activity android:name=".AnimalFullscreenActivity"
+            android:screenOrientation="portrait"/>
     </application>
 
 </manifest>
