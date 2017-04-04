@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -38,13 +39,17 @@ public class LoginActivity extends BaseCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         context = getApplicationContext();
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        if (toolbar != null){
+            setupToolbar("", true);
+        }
+
         Button btnLogin;
-        ImageView back;
         TextView linkRegister, linkPasswordReset;
         final EditText inputEmail, inputPassword;
 
         btnLogin = (Button) findViewById(R.id.btn_login);
-        back = (ImageView) findViewById(R.id.back_btn);
         inputEmail = (EditText) findViewById(R.id.input_email);
         inputPassword = (EditText) findViewById(R.id.input_password);
         linkRegister = (TextView) findViewById(R.id.link_register);
@@ -76,14 +81,6 @@ public class LoginActivity extends BaseCompatActivity {
             }
         });
 
-        back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                startActivity(intent);
-            }
-        });
-
         linkRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -101,6 +98,15 @@ public class LoginActivity extends BaseCompatActivity {
         });
 
     }
+
+    @Override
+    public boolean onSupportNavigateUp(){
+        //onBackPressed();
+        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+        startActivity(intent);
+        return true;
+    }
+
 
     @Override
     public void onStart(){

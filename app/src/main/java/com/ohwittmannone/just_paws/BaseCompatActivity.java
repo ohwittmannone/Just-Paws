@@ -30,12 +30,14 @@ public class BaseCompatActivity extends AppCompatActivity {
 
         actionBar = getSupportActionBar();
         actionBar.setTitle(title);
+        toolbar.setTitleTextColor(Color.WHITE);
         actionBar.setDisplayHomeAsUpEnabled(displayUp);
     }
 
     public void setupCollapsibleToolbar(String title, boolean setVisibleOnlyCollapse){
         collapsingToolbar = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
         collapsingToolbar.setTitle(title);
+        collapsingToolbar.setCollapsedTitleTextColor(Color.WHITE);
 
         if (setVisibleOnlyCollapse){
             collapsingToolbar.setExpandedTitleColor(Color.TRANSPARENT);

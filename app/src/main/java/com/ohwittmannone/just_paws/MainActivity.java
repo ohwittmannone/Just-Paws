@@ -1,7 +1,6 @@
 package com.ohwittmannone.just_paws;
 
 import android.animation.Animator;
-import android.app.SearchManager;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
@@ -14,16 +13,12 @@ import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
-import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -54,7 +49,7 @@ public class MainActivity extends BaseCompatActivity
 
     private DatabaseReference reference;
 
-    private Boolean adminStatus;
+    private Boolean adminStatus = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,7 +81,7 @@ public class MainActivity extends BaseCompatActivity
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
-        //refreshState();
+        refreshState();
 
 
         //fabs
@@ -352,8 +347,7 @@ public class MainActivity extends BaseCompatActivity
 
     }
 
-    private void
-    refreshState() {
+    private void refreshState() {
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
 
         if (!Cache.getInstance(getApplicationContext()).getLoginState()) {

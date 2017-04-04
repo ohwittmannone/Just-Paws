@@ -1,5 +1,6 @@
 package com.ohwittmannone.just_paws.admin;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -13,6 +14,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.ohwittmannone.just_paws.BaseCompatActivity;
+import com.ohwittmannone.just_paws.MainActivity;
 import com.ohwittmannone.just_paws.R;
 import com.ohwittmannone.just_paws.adapters.AdminAdapter;
 import com.ohwittmannone.just_paws.models.User;
@@ -77,8 +79,16 @@ public class AdminMgmt extends BaseCompatActivity {
 
     @Override
     public boolean onSupportNavigateUp(){
-        onBackPressed();
+        //onBackPressed();
+        Intent intent = new Intent(AdminMgmt.this, MainActivity.class);
+        startActivity(intent);
         return true;
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(AdminMgmt.this, MainActivity.class);
+        startActivity(intent);
     }
 
     private void getUserList(){
