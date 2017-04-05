@@ -76,7 +76,7 @@ public class AnimalFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_animals, container, false);
 
         //cardview
-        mRecyclerView = (RecyclerView) rootView.findViewById(R.id.card_view);
+        mRecyclerView = (RecyclerView) rootView.findViewById(R.id.animal_recyclerView);
 
         //mCardAdapter = new AnimalAdapter(mAimalTypeList);
         animalAdapter = new AnimalAdapter(getActivity().getApplicationContext(), mAnimalModelList);

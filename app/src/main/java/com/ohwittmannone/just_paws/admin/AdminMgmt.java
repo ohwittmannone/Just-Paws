@@ -39,8 +39,6 @@ public class AdminMgmt extends BaseCompatActivity {
     public List<User> mUserList = new ArrayList<>();
     private List<User> mAdminList = new ArrayList<>();
 
-    private DatabaseReference adminReference;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

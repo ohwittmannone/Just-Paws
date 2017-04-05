@@ -40,11 +40,6 @@ public class AdminUtils {
                     GenericTypeIndicator<ArrayList<String>> t = new GenericTypeIndicator<ArrayList<String>>() {
                     };
                     List<String> userFavourites = user.getFavourites();
-                    /*for (int i = 0; i < userFavourites.size(); i++){
-                        if (userFavourites.get(i).equals(petID)){
-
-                        }
-                    }*/
                     if (userFavourites != null) {
                         for (Iterator<String> iterator = userFavourites.iterator(); iterator.hasNext(); ) {
                             String favouriteAnimal = iterator.next();

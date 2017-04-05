@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context="com.ohwittmannone.just_paws.MainActivity">
+    tools:context="com.ohwittmannone.just_paws.MainActivity"
+    android:id="@+id/app_bar_coordinator_layout">
 
 
     <android.support.design.widget.AppBarLayout

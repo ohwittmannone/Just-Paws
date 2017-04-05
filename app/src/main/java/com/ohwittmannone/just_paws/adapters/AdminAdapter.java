@@ -140,7 +140,3 @@ public class AdminAdapter extends RecyclerView.Adapter<AdminAdapter.ViewHolder> 
     }
 
 }
-
-
-
-//problem: doinbackground has to get the users first. the onpostexecute should setup the button for admin

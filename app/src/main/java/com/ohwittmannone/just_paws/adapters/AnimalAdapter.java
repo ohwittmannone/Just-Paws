@@ -287,8 +287,4 @@ public class AnimalAdapter extends RecyclerView.Adapter<AnimalAdapter.ViewHolder
         generateData();
     }
 
-    public int getmCurrentFavType(){
-        return mCurrentFavType;
-    }
-
 }
