@@ -8,7 +8,6 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
@@ -16,7 +15,6 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -116,12 +114,7 @@ public class MainActivity extends BaseCompatActivity
         emailFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent Email = new Intent(Intent.ACTION_SEND);
-                Email.setType("text/email");
-                Email.putExtra(Intent.EXTRA_EMAIL,
-                        new String[]{"info.justpaws@gmail.com"});
-                Email.putExtra(Intent.EXTRA_TEXT, "Hello Just Paws,\n\n\n\n Sent via the Just Paws app." + "");
-                startActivity(Intent.createChooser(Email, "Email with:"));
+                emailJustPaws();
             }
         });
 
@@ -250,6 +243,8 @@ public class MainActivity extends BaseCompatActivity
         } else if (id == R.id.adopt_foster) {
             fragmentClass = AdoptFosterFragment.class;
             setupCollapsibleToolbar("Adopt or Foster", true);
+        } else if (id == R.id.email_us){
+            emailJustPaws();
         } else if (id == R.id.login) {
             Intent intent = new Intent(this, LoginActivity.class);
             startActivity(intent);
@@ -260,7 +255,6 @@ public class MainActivity extends BaseCompatActivity
             setupCollapsibleToolbar("Adoptable Animals", true);
             refreshState();
             Toast.makeText(MainActivity.this, "Logged out", Toast.LENGTH_SHORT).show();
-
         }else if (id == R.id.adminMgmt){
             Intent intent = new Intent(this, AdminMgmt.class);
             startActivity(intent);
@@ -270,7 +264,7 @@ public class MainActivity extends BaseCompatActivity
         } catch (Exception e) {
             e.printStackTrace();
         }
-        if (id != R.id.login && id != R.id.adminMgmt) {
+        if (id != R.id.login && id != R.id.adminMgmt && id != R.id.email_us) {
             FragmentManager fragmentManager = getSupportFragmentManager();
             fragmentManager.beginTransaction().replace(R.id.flContent, fragment).commit();
 
@@ -387,6 +381,15 @@ public class MainActivity extends BaseCompatActivity
             }
             return null;
         }
+    }
+
+    public void emailJustPaws(){
+        Intent Email = new Intent(Intent.ACTION_SEND);
+        Email.setType("text/email");
+        Email.putExtra(Intent.EXTRA_EMAIL,
+                new String[]{"info.justpaws@gmail.com"});
+        Email.putExtra(Intent.EXTRA_TEXT, "Hello Just Paws,\n\n\n\n Sent via the Just Paws app." + "");
+        startActivity(Intent.createChooser(Email, "Email with:"));
     }
 
 

@@ -15,6 +15,10 @@
                     android:id="@+id/adopt_foster"
                     android:icon="@drawable/ic_home_black_24dp"
                     android:title="Adopt or Foster" />
+                <item
+                    android:id="@+id/email_us"
+                    android:icon="@drawable/ic_email_black_24dp"
+                    android:title="Email Us"/>
             </group>
 
         </menu>
