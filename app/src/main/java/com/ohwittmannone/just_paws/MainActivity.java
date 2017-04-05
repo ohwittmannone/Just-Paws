@@ -21,6 +21,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
 
+import com.crashlytics.android.Crashlytics;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -36,6 +37,7 @@ import com.ohwittmannone.just_paws.login.LoginActivity;
 import com.ohwittmannone.just_paws.models.User;
 import com.ohwittmannone.just_paws.utils.Cache;
 import com.ohwittmannone.just_paws.utils.Common;
+import io.fabric.sdk.android.Fabric;
 
 public class MainActivity extends BaseCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -54,6 +56,7 @@ public class MainActivity extends BaseCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Fabric.with(this, new Crashlytics());
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);

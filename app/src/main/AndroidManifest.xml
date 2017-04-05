@@ -40,6 +40,10 @@
             android:screenOrientation="portrait"/>
         <activity android:name=".AnimalFullscreenActivity"
             android:screenOrientation="portrait"/>
+        <meta-data
+            android:name="io.fabric.ApiKey"
+            android:value="04cbbae5172a59588faa0f3b1a4b6b9ab25e9f7c" />
     </application>
 
+    <uses-permission android:name="android.permission.INTERNET" />
 </manifest>

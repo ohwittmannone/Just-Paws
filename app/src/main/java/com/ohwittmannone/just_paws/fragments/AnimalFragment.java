@@ -29,6 +29,7 @@ import com.ohwittmannone.just_paws.admin.AddAnimalActivity;
 import com.ohwittmannone.just_paws.R;
 import com.ohwittmannone.just_paws.adapters.AnimalAdapter;
 import com.ohwittmannone.just_paws.models.AnimalType;
+import com.ohwittmannone.just_paws.models.User;
 import com.ohwittmannone.just_paws.utils.Common;
 
 import java.util.ArrayList;
@@ -48,14 +49,16 @@ public class AnimalFragment extends Fragment {
     private AnimalAdapter animalAdapter;
     private LinearLayoutManager mCardLayoutManager;
     private ProgressBar progressBar;
-    private DatabaseReference reference;
+    private DatabaseReference reference, referenceUser;
     private ArrayList<String> favouritesList;
 
     private ChildEventListener mChildEventListener;
 
     public final static int SHOW_FAV = 0;
     public final static int NO_FAV = 1;
+
     private boolean isFavourite;
+    private Boolean adminStatus = false;
 
 
     @Override
@@ -114,11 +117,33 @@ public class AnimalFragment extends Fragment {
 
         addAnimalBtn = menu.findItem(R.id.add_btn);
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        if (user != null){
+        /*if (user != null){
             addAnimalBtn.setVisible(true);
         }
         else {
             addAnimalBtn.setVisible(false);
+        }*/
+
+        if (user!=null) {
+            String userUid = user.getUid();
+            referenceUser = FirebaseDatabase.getInstance().getReference(Common.USER).child(userUid);
+            referenceUser.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    User userModel = dataSnapshot.getValue(User.class);
+                    adminStatus = userModel.isAdmin();
+                    if (adminStatus) {
+                        addAnimalBtn.setVisible(true);
+                    } else {
+                        addAnimalBtn.setVisible(false);
+                    }
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
+            });
         }
     }
 
