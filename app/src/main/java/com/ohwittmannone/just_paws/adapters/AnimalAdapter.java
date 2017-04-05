@@ -132,7 +132,11 @@ public class AnimalAdapter extends RecyclerView.Adapter<AnimalAdapter.ViewHolder
             });
         }
         else {
-            Picasso.with(mContext).load(R.drawable.placeholder).into(img);
+            Picasso.with(mContext).load(R.drawable.placeholder).fit().centerInside().into(img);
+            holder.progressBar.setVisibility(View.GONE);
+            holder.petInfo.setVisibility(View.VISIBLE);
+            holder.imgURL.setVisibility(View.VISIBLE);
+            holder.btnFavourite.setVisibility(View.VISIBLE);
         }
 
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();

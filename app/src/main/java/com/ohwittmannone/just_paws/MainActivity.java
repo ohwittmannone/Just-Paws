@@ -20,6 +20,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.crashlytics.android.Crashlytics;
 import com.google.firebase.auth.FirebaseAuth;
@@ -273,6 +274,7 @@ public class MainActivity extends BaseCompatActivity
             Cache.getInstance(this).logout();
             setupCollapsibleToolbar("Adoptable Animals", true);
             refreshState();
+            Toast.makeText(MainActivity.this, "Logged out", Toast.LENGTH_SHORT).show();
 
         }else if (id == R.id.adminMgmt){
             Intent intent = new Intent(this, AdminMgmt.class);
