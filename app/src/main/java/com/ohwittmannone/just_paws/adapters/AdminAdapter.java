@@ -30,7 +30,6 @@ public class AdminAdapter extends RecyclerView.Adapter<AdminAdapter.ViewHolder> 
 
     private String mCurrentSearchText;
 
-    private DatabaseReference reference;
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         public TextView nameText;
@@ -111,10 +110,6 @@ public class AdminAdapter extends RecyclerView.Adapter<AdminAdapter.ViewHolder> 
     public void reset(List<User> userData) {
         this.mOriginalUserList = userData;
         generateData();
-    }
-
-    public void resetAdmin(List<User> mAdminList){
-        this.mAdminList = mAdminList;
     }
 
     public void generateData() {

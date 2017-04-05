@@ -25,7 +25,7 @@ public class AdminUtils {
 
     private static DatabaseReference reference, referenceDelete, referenceDeleteUser;
 
-    public static void deleteAnimal(final String petID, Context context){
+    public static void deleteAnimal(final String petID, final Context context){
         reference = FirebaseDatabase.getInstance().getReference(Common.ANIMALTYPE).child(petID);
         reference.removeValue();
 
@@ -53,6 +53,8 @@ public class AdminUtils {
 
                     }
                 }
+
+                reference.removeEventListener(this);
             }
 
             @Override

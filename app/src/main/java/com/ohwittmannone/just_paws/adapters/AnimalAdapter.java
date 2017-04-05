@@ -188,6 +188,8 @@ public class AnimalAdapter extends RecyclerView.Adapter<AnimalAdapter.ViewHolder
                         holder.btnEdit.setVisibility(View.GONE);
                         holder.btnDelete.setVisibility(View.GONE);
                     }
+
+                    reference2.removeEventListener(this);
                 }
 
                 @Override

@@ -75,7 +75,7 @@ public class EditAnimalActivity extends BaseCompatActivity {
 
     private void getData(String animalId){
 
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference(Common.ANIMALTYPE).child(animalId);
+        final DatabaseReference reference = FirebaseDatabase.getInstance().getReference(Common.ANIMALTYPE).child(animalId);
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -87,6 +87,8 @@ public class EditAnimalActivity extends BaseCompatActivity {
                 editAnimalName.setText(nameValue);
                 editAnimalDescription.setText(descriptionValue);
                 editAnimalURL.setText(urlValue);
+
+                reference.removeEventListener(this);
             }
 
             @Override

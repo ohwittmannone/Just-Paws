@@ -176,6 +176,12 @@ public class AnimalFragment extends Fragment {
 
     }
 
+    @Override
+    public void onDestroy(){
+        super.onDestroy();
+        FirebaseDatabase.getInstance().getReference(Common.ANIMALTYPE).removeEventListener(mChildEventListener);
+    }
+
 
     private void getAnimals() {
         mChildEventListener = new ChildEventListener() {

@@ -141,4 +141,10 @@ public class AdminMgmt extends BaseCompatActivity {
 
     }
 
+    @Override
+    public void onDestroy(){
+        super.onDestroy();
+        FirebaseDatabase.getInstance().getReference(Common.USER).removeEventListener(mChildEventListener);
+    }
+
 }
