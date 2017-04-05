@@ -141,16 +141,19 @@ public class LoginActivity extends BaseCompatActivity {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     Log.d(TAG, "signInWithEmail:onComplete:" + task.isSuccessful());
-
+                    if (task.isSuccessful()){
+                        Cache.getInstance(getApplicationContext()).saveLoginState(true);
+                        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                        hideProgress();
+                        startActivity(intent);
+                    }
                     if (!task.isSuccessful()) {
                         Log.w(TAG, "signInWithEmail:failed", task.getException());
                         Toast.makeText(LoginActivity.this, "Login failed, try again",
                                 Toast.LENGTH_SHORT).show();
+                        hideProgress();
                     }
-                    Cache.getInstance(getApplicationContext()).saveLoginState(true);
-                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                    hideProgress();
-                    startActivity(intent);
+
                 }
             });
         }
