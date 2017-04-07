@@ -1,7 +1,9 @@
 package com.ohwittmannone.just_paws.adapters;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,6 +21,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.ohwittmannone.just_paws.DetailCardLayout;
+import com.ohwittmannone.just_paws.MainActivity;
 import com.ohwittmannone.just_paws.admin.AdminUtils;
 import com.ohwittmannone.just_paws.admin.EditAnimalActivity;
 import com.ohwittmannone.just_paws.models.AnimalType;
@@ -208,8 +211,31 @@ public class AnimalAdapter extends RecyclerView.Adapter<AnimalAdapter.ViewHolder
 
             holder.btnDelete.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onClick(View view) {
-                    AdminUtils.deleteAnimal(animalModel.getId(), view.getContext());
+                public void onClick(final View view) {
+
+                    AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
+                    builder.setMessage("Are you sure you want to delete " + animalModel.getPetName() + "?")
+                            .setTitle("Delete Animal");
+
+                    builder.setPositiveButton("Delete", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            //user clicked delete
+                            AdminUtils.deleteAnimal(animalModel.getId(), view.getContext());
+                            dialogInterface.dismiss();
+                        }
+                    });
+
+                    builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            //user cancelled
+                            dialogInterface.dismiss();
+                        }
+                    });
+
+                    AlertDialog dialog = builder.create();
+                    dialog.show();
                 }
             });
 
