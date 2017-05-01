@@ -5,16 +5,17 @@
     android:background="@color/black">
 
     <ImageView
+        android:id="@+id/imgDisplay"
+        android:layout_width="match_parent"
+        android:layout_height="566dp"
+        android:scaleType="fitCenter" />
+
+    <ImageView
         android:id="@+id/btnClose"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/ic_arrow_back_white_24dp"
         android:padding="10dp"/>
 
-    <ImageView
-        android:id="@+id/imgDisplay"
-        android:layout_width="match_parent"
-        android:layout_height="566dp"
-        android:scaleType="fitCenter" />
 
 </RelativeLayout>
